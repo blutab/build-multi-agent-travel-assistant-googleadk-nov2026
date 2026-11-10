@@ -47,6 +47,8 @@ pip install -r requirements.txt
 ```
 
 ### 2. Add your API key
+Create your own free key in [Google AI Studio](https://aistudio.google.com). Please don't share a key: free limits apply per project, and on `gemini-3.5-flash-lite` a project gets 15 requests per minute, which one table sharing a key would quickly use up.
+
 Copy `.env.example` to `.env` in the repo root and paste in your key:
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
