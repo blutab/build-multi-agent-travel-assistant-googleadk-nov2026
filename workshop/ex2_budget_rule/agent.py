@@ -19,13 +19,15 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
         nights: How many nights the traveller is staying.
         budget_eur: The traveller's total budget for the whole trip, in euros.
     """
-    tool_context.state["nights"] = nights
-    tool_context.state["budget_eur"] = budget_eur
+    # TODO 1: save both values in state, the session's notebook:
+    #     tool_context.state["nights"] = ...
+    #     tool_context.state["budget_eur"] = ...
     return {"status": "saved"}
 
 
 def enforce_budget(tool, args, tool_context, tool_response):
-    """Runs after every tool call. Hides hotels the traveller can't afford.
+    """Runs after every tool call. Hides hotels the traveller can't afford
+    from the search results.
 
     It checks the real cost from our data, not the prices the model saw.
 
@@ -46,15 +48,33 @@ def enforce_budget(tool, args, tool_context, tool_response):
 
     max_per_night = budget * HOTEL_SHARE / nights
 
-    # TODO: keep only the hotels whose real_cost_per_night(h["name"])
+    # TODO 2: keep only the hotels whose real_cost_per_night(h["name"])
     # is at most max_per_night. For now, every hotel gets through.
     affordable = tool_response["hotels"]
+
+    # Add the real nightly cost, so the model's sums include the fees.
+    affordable = [
+        {**h, "real_cost_per_night": real_cost_per_night(h["name"])}
+        for h in affordable
+    ]
 
     return {
         "status": "success",
         "hotels": affordable,
-        "note": f"Only hotels up to €{max_per_night:.0f}/night incl. fees are shown.",
+        "note": f"Only hotels up to €{max_per_night:.0f}/night incl. fees are shown. "
+        "Use real_cost_per_night for totals: it includes the fees.",
     }
+
+
+# Level 2: the rule has a hole. Find it with the break-it prompts in the README,
+# then close it inside enforce_budget.
+
+# Level 3 (if you finish early): write flag_budget(tool, args, tool_context,
+# tool_response). Instead of removing hotels, keep them all and add two fields
+# to each one:
+#     "real_cost_per_night": real_cost_per_night(h["name"])
+#     "within_budget": True or False
+# Then attach it instead of enforce_budget: after_tool_callback=flag_budget
 
 
 root_agent = Agent(
@@ -63,7 +83,7 @@ root_agent = Agent(
     instruction="""You are TripMate, a friendly travel assistant.
 Use the tools to find flights and hotels, then suggest a trip
 with a day-by-day plan. Stay within the traveller's budget.""",
-    # TODO: add save_trip_details to the tools.
+    # TODO 3: add save_trip_details to the tools.
     tools=[search_flights, search_hotels, get_hotel_details],
-    # TODO: attach the budget rule: after_tool_callback=enforce_budget
+    # TODO 4: attach the budget rule: after_tool_callback=enforce_budget
 )

@@ -20,7 +20,7 @@ planner_agent = Agent(
     instruction="""You are TripMate, a friendly travel assistant.
 Use the tools to find flights and hotels, then suggest a trip
 with a day-by-day plan. Stay within the traveller's budget.""",
-    # TODO 3 (do this after TODO 2): add the local notes to the instruction above:
+    # TODO 2: add the local notes to the instruction above:
     #   Local notes for the trip dates:
     #   {local_notes}
     #
@@ -30,7 +30,7 @@ with a day-by-day plan. Stay within the traveller's budget.""",
     after_tool_callback=enforce_budget,
 )
 
-# TODO 2: make root_agent a SequentialAgent named "tripmate" that runs
+# TODO 3: make root_agent a SequentialAgent named "tripmate" that runs
 # local_insider, then planner_agent:
 #     SequentialAgent(name=..., sub_agents=[...])
 root_agent = planner_agent

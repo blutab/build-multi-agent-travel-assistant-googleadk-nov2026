@@ -17,10 +17,10 @@ At the end of Exercise 2, your plan probably walked into the local notes: Sagrad
 Your work is in `agent.py`. `tools.py` now has a `get_local_notes` tool, and the budget rule from Exercise 2 has moved to `budget.py`.
 
 1. **TODO 1:** create `local_insider`: an instruction, the `get_local_notes` tool, and `output_key="local_notes"`. You already know how from Exercise 1.
-2. **TODO 2:** make `root_agent` a `SequentialAgent` that runs `local_insider`, then `planner_agent`.
-3. **TODO 3:** add `{local_notes}` to the planner's instruction, plus one line: never schedule anything that the local notes say is closed or unsafe.
+2. **TODO 2:** add `{local_notes}` to the planner's instruction, plus one line: never schedule anything that the local notes say is closed or unsafe.
+3. **TODO 3:** make `root_agent` a `SequentialAgent` that runs `local_insider`, then `planner_agent`.
 
-Do TODO 2 before TODO 3. `{local_notes}` only exists in state once `local_insider` has run, so the planner gives an error if it runs on its own.
+Finish all three before you restart. `{local_notes}` only exists in state once `local_insider` has run, so with TODO 2 done and TODO 3 not, the planner runs on its own and gives an error.
 
 Then restart `adk web workshop` and pick `ex3_fixed_order`.
 

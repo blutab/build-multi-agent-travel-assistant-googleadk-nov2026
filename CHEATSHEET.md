@@ -36,9 +36,29 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
     return {"status": "saved"}
 ```
 
-## A callback (Exercise 2)
+## Callbacks (Exercise 2)
 
-`after_tool_callback` runs after every tool call. Return `None` to keep the result, or a dict to replace what the model sees. The parameter names must be exactly these.
+A callback is a Python function ADK runs at a set moment. Every callback works the same way:
+
+- **Return `None`** to carry on as normal.
+- **Return a value** to replace or skip that step.
+
+ADK passes the arguments by keyword, so the parameter names must be exactly the ones below. Attach a callback to an agent, for example `Agent(..., after_tool_callback=enforce_budget)`. You can also pass a list of callbacks.
+
+| Callback | Runs | Parameters | Return a value to... | Guardrail examples |
+|---|---|---|---|---|
+| `before_agent_callback` | Before an agent starts | `callback_context` | Skip the agent and reply with this `types.Content` | No trip planning until the budget is in state |
+| `after_agent_callback` | After an agent finishes | `callback_context` | Replace the agent's final reply | Reject a plan that hits a closure in the local notes |
+| `before_model_callback` | Before each LLM request | `callback_context`, `llm_request` | Skip the model call and use this `LlmResponse` | Block messages with card or passport numbers; refuse off-topic requests |
+| `after_model_callback` | After each LLM reply | `callback_context`, `llm_response` | Replace the model's reply | Strip personal data; block promises the business can't keep |
+| `before_tool_callback` | Before a tool runs | `tool`, `args`, `tool_context` | Skip the tool and use this dict as its result | Block a booking over budget; fix bad arguments; limit calls |
+| `after_tool_callback` | After a tool runs | `tool`, `args`, `tool_context`, `tool_response` | Replace what the model sees | Exercise 2's budget filter; redact internal fields |
+
+`callback_context.state` and `tool_context.state` are the same session state.
+
+### after_tool_callback: change what the model sees
+
+This is Exercise 2's rule.
 
 ```python
 def enforce_budget(tool, args, tool_context, tool_response):
@@ -48,6 +68,72 @@ def enforce_budget(tool, args, tool_context, tool_response):
     return {"status": "success", "hotels": affordable}
 
 root_agent = Agent(..., after_tool_callback=enforce_budget)
+```
+
+### before_tool_callback: block or fix a call before it runs
+
+```python
+def block_expensive_details(tool, args, tool_context):
+    if tool.name == "get_hotel_details" and args["hotel_name"] in BLOCKED:
+        return {"status": "error", "message": "Not available."}  # tool never runs
+    return None
+
+root_agent = Agent(..., before_tool_callback=block_expensive_details)
+```
+
+You can also change `args` in place, for example `args["city"] = "Barcelona"`.
+
+### before_model_callback: check input before the model sees it
+
+```python
+import re
+from google.adk.models import LlmResponse
+from google.genai import types
+
+CARD = re.compile(r"\b(?:\d[ -]?){13,16}\b")
+
+def block_card_numbers(callback_context, llm_request):
+    last = llm_request.contents[-1]
+    text = " ".join(p.text or "" for p in last.parts or [])
+    if CARD.search(text):
+        return LlmResponse(content=types.Content(role="model", parts=[
+            types.Part(text="Please don't share card numbers here.")]))
+    return None  # send the request to the model as normal
+
+root_agent = Agent(..., before_model_callback=block_card_numbers)
+```
+
+### after_model_callback: check the model's reply
+
+```python
+def no_refund_promises(callback_context, llm_response):
+    text = "".join(p.text or "" for p in (llm_response.content.parts if llm_response.content else []))
+    if "full refund" in text.lower():
+        return LlmResponse(content=types.Content(role="model", parts=[
+            types.Part(text="Refunds depend on the booking. Please check with the hotel.")]))
+    return None
+```
+
+### before_agent_callback: skip an agent
+
+```python
+def need_budget_first(callback_context):
+    if "budget_eur" not in callback_context.state:
+        return types.Content(role="model", parts=[
+            types.Part(text="What's your total budget for the trip?")])
+    return None  # run the agent as normal
+
+planner_agent = Agent(..., before_agent_callback=need_budget_first)
+```
+
+### Asking the traveller first
+
+For actions you can't undo, like booking or paying, ADK can pause and ask for confirmation before a tool runs:
+
+```python
+from google.adk.tools import FunctionTool
+
+root_agent = Agent(..., tools=[FunctionTool(book_hotel, require_confirmation=True)])
 ```
 
 ## A fixed order (Exercise 3)
@@ -94,6 +180,8 @@ An agent can have only one parent.
 |---|---|
 | The model to call your code | A tool |
 | A rule that must always hold | State + a callback |
+| A check before something runs | A `before_*` callback |
+| Approval before an action you can't undo | `require_confirmation=True` |
 | Steps that must happen in order | `SequentialAgent` |
 | The model to pick a specialist | `sub_agents` on an `Agent` |
 

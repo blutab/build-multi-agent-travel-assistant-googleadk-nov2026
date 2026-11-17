@@ -10,6 +10,7 @@ from .tools import (
     search_hotels,
 )
 
+# Exercise 3's team, with root_agent renamed to trip_planner and a description added.
 local_insider = Agent(
     name="local_insider",
     model="gemini-3.5-flash-lite",
@@ -42,6 +43,7 @@ trip_planner = SequentialAgent(
     "and a hotel within budget and writes a day-by-day plan.",
     sub_agents=[local_insider, planner_agent],
 )
+
 
 food_guide = Agent(
     name="food_guide",
