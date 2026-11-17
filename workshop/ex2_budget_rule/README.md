@@ -17,7 +17,7 @@ The agent writes the budget into state, and before any hotel list reaches the mo
 Everything is in `agent.py`. `tools.py` is the same as in Exercise 1.
 
 1. Read `save_trip_details`. It's already written: it stores `nights` and `budget_eur` in `tool_context.state`. Add it to the agent's tools.
-2. Read `enforce_budget`. Find the TODO and finish the filter: keep only hotels whose `price_per_night + fees_per_night` is at most `max_per_night`.
+2. Read `enforce_budget`. Find the TODO and finish the filter: keep only hotels whose `real_cost_per_night(h["name"])` is at most `max_per_night`. That helper reads the real price, fees included, straight from the data, whatever the model saw.
 3. Read the check that returns an error if no budget has been saved yet. It tells the model to save the budget first.
 4. Attach the rule to the agent with `after_tool_callback=enforce_budget`.
 
@@ -27,7 +27,7 @@ Then restart `adk web workshop` and pick `ex2_budget_rule`.
 
 Send the golden prompt in 3 new sessions:
 
-> I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach! Plan my trip with flights, a hotel and a day-by-day plan.
+> I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach and I want to stay close by! Plan my trip with flights, a hotel and a day-by-day plan.
 
 For each run, check:
 

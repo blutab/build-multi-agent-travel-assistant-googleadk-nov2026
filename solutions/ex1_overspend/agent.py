@@ -1,6 +1,6 @@
 from google.adk.agents import Agent
 
-from .tools import search_flights, search_hotels
+from .tools import get_hotel_details, search_flights, search_hotels
 
 root_agent = Agent(
     name="tripmate",
@@ -8,5 +8,5 @@ root_agent = Agent(
     instruction="""You are TripMate, a friendly travel assistant.
 Use the tools to find flights and hotels, then suggest a trip
 with a day-by-day plan. Stay within the traveller's budget.""",
-    tools=[search_flights, search_hotels],
+    tools=[search_flights, search_hotels, get_hotel_details],
 )

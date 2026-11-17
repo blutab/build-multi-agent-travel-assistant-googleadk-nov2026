@@ -28,7 +28,7 @@ Then restart `adk web workshop` and pick `ex3_fixed_order`.
 
 Send the golden prompt in 3 new sessions:
 
-> I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach! Plan my trip with flights, a hotel and a day-by-day plan.
+> I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach and I want to stay close by! Plan my trip with flights, a hotel and a day-by-day plan.
 
 For each run, check:
 

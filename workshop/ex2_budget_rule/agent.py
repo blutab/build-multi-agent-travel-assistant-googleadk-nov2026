@@ -1,7 +1,12 @@
 from google.adk.agents import Agent
 from google.adk.tools.tool_context import ToolContext
 
-from .tools import search_flights, search_hotels
+from .tools import (
+    get_hotel_details,
+    real_cost_per_night,
+    search_flights,
+    search_hotels,
+)
 
 # Hotels may use at most 80% of the total budget, which leaves room for the flight.
 HOTEL_SHARE = 0.8
@@ -22,6 +27,8 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
 def enforce_budget(tool, args, tool_context, tool_response):
     """Runs after every tool call. Hides hotels the traveller can't afford.
 
+    It checks the real cost from our data, not the prices the model saw.
+
     Returning None keeps the tool's result as it is.
     Returning a dict replaces what the model sees.
     """
@@ -39,7 +46,7 @@ def enforce_budget(tool, args, tool_context, tool_response):
 
     max_per_night = budget * HOTEL_SHARE / nights
 
-    # TODO: keep only the hotels whose price_per_night + fees_per_night
+    # TODO: keep only the hotels whose real_cost_per_night(h["name"])
     # is at most max_per_night. For now, every hotel gets through.
     affordable = tool_response["hotels"]
 
@@ -57,6 +64,6 @@ root_agent = Agent(
 Use the tools to find flights and hotels, then suggest a trip
 with a day-by-day plan. Stay within the traveller's budget.""",
     # TODO: add save_trip_details to the tools.
-    tools=[search_flights, search_hotels],
+    tools=[search_flights, search_hotels, get_hotel_details],
     # TODO: attach the budget rule: after_tool_callback=enforce_budget
 )

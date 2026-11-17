@@ -2,6 +2,8 @@
 
 from google.adk.tools.tool_context import ToolContext
 
+from .tools import real_cost_per_night
+
 # Hotels may use at most 80% of the total budget, which leaves room for the flight.
 HOTEL_SHARE = 0.8
 
@@ -20,6 +22,8 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
 
 def enforce_budget(tool, args, tool_context, tool_response):
     """Runs after every tool call. Hides hotels the traveller can't afford.
+
+    It checks the real cost from our data, not the prices the model saw.
 
     Returning None keeps the tool's result as it is.
     Returning a dict replaces what the model sees.
@@ -41,7 +45,7 @@ def enforce_budget(tool, args, tool_context, tool_response):
     affordable = [
         h
         for h in tool_response["hotels"]
-        if h["price_per_night"] + h["fees_per_night"] <= max_per_night
+        if real_cost_per_night(h["name"]) <= max_per_night
     ]
 
     return {

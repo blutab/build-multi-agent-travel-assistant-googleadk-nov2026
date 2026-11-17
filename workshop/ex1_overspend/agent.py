@@ -1,6 +1,6 @@
 from google.adk.agents import Agent
 
-from .tools import search_flights, search_hotels
+from .tools import get_hotel_details, search_flights, search_hotels
 
 # Example: an agent with one tool. It's about the weather, not travel, so don't
 # copy it as is. Notice that get_weather has no brackets: you hand the function to
@@ -23,6 +23,6 @@ from .tools import search_flights, search_hotels
 #   - instruction: describe TripMate, a friendly travel assistant. Tell it to use
 #     the tools to find flights and hotels, suggest a trip with a day-by-day plan,
 #     and stay within the traveller's budget.
-#   - tools: the two functions imported above
+#   - tools: the three functions imported above
 #
 # The variable must be called root_agent, because that's the name adk web looks for.

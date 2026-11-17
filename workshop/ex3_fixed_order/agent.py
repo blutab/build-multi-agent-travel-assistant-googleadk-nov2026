@@ -1,7 +1,7 @@
 from google.adk.agents import Agent, SequentialAgent
 
 from .budget import enforce_budget, save_trip_details
-from .tools import get_local_notes, search_flights, search_hotels
+from .tools import get_hotel_details, get_local_notes, search_flights, search_hotels
 
 # TODO 1: create local_insider, an Agent with:
 #   - name: "local_insider"
@@ -26,7 +26,7 @@ with a day-by-day plan. Stay within the traveller's budget.""",
     #
     #   Never schedule anything the local notes say is closed or unsafe.
     # {local_notes} reads the reply local_insider saved into state.
-    tools=[search_flights, search_hotels, save_trip_details],
+    tools=[search_flights, search_hotels, get_hotel_details, save_trip_details],
     after_tool_callback=enforce_budget,
 )
 

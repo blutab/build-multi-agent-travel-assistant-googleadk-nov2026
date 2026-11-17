@@ -3,20 +3,20 @@
     {
       "name": "Mar Azul Beach Resort",
       "price_per_night": 115,
-      "fees_per_night": 45,
+      "fee_at_checkin": 45,
       "highlights": "Beachfront, rooftop pool, spa"
     },
     {
       "name": "Hotel Gràcia",
       "price_per_night": 85,
-      "fees_per_night": 10,
-      "highlights": "Quiet neighbourhood, 20 min by metro to the beach"
+      "fee_at_checkin": 10,
+      "highlights": "Quiet neighbourhood, 45 min by metro to the beach"
     },
     {
       "name": "Rambla Hostel",
       "price_per_night": 40,
-      "fees_per_night": 5,
-      "highlights": "Shared dorms, very central"
+      "fee_at_checkin": 5,
+      "highlights": "Shared dorms, in the hills above the city, 50 min by bus to the beach"
     }
   ]
 }

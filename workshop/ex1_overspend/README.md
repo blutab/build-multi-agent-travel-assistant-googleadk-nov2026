@@ -24,20 +24,21 @@ You can watch all of this happen in the **Events** tab of `adk web`.
 
 1. Read `tools.py` to see what the agent will be able to call. The mock data it searches is in `data/` at the repo root.
 2. In `agent.py`, create `root_agent` with a name, the model and an instruction describing TripMate.
-3. Give it the two tools.
+3. Give it the three tools.
 4. From the repo root, run `adk web workshop`, open http://localhost:8000, pick `ex1_overspend` and say hi.
 
 ## Break (4 min)
 
 Send this golden prompt:
 
-> I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach! Plan my trip with flights, a hotel and a day-by-day plan.
+> I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach and I want to stay close by! Plan my trip with flights, a hotel and a day-by-day plan.
 
 Start a new session and send it again, for 3 runs in total. For each run:
 
-1. Work out the real total: `(price + fees) × nights + flight`.
-2. Open the **Events** tab and find the tool results. Were the fees there? Did the agent mention them?
-3. Score it: did this run stay within €600?
+1. Open the **Events** tab. Which tools did the agent call? Did it ever call `get_hotel_details` for the hotel it picked?
+2. Find the real fees in `data/hotels.json` (`fee_at_checkin`, charged per night) and work out the real total: `(price_per_night + fee_at_checkin) × nights + flight`.
+3. Did the agent tell you about the fees?
+4. Score it: did this run stay within €600?
 
 ## Discuss
 

@@ -2,6 +2,7 @@ from google.adk.agents import Agent, SequentialAgent
 
 from .budget import enforce_budget, save_trip_details
 from .tools import (
+    get_hotel_details,
     get_local_notes,
     get_restaurants,
     get_transport,
@@ -31,7 +32,7 @@ Local notes for the trip dates:
 {local_notes}
 
 Never schedule anything the local notes say is closed or unsafe.""",
-    tools=[search_flights, search_hotels, save_trip_details],
+    tools=[search_flights, search_hotels, get_hotel_details, save_trip_details],
     after_tool_callback=enforce_budget,
 )
 

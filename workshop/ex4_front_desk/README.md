@@ -45,7 +45,7 @@ Run them in order, in one session.
 
 Golden prompt:
 
-> I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach! Plan my trip with flights, a hotel and a day-by-day plan.
+> I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach and I want to stay close by! Plan my trip with flights, a hotel and a day-by-day plan.
 
 Use the **Traces** tab to see which agent answered each message.
 
