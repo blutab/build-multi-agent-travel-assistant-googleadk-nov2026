@@ -16,13 +16,13 @@ At the end of Exercise 2, your plan probably walked into the local notes: Sagrad
 
 Your work is in `agent.py`. `tools.py` now has a `get_local_notes` tool, and the budget rule from Exercise 2 has moved to `budget.py`.
 
-1. **TODO 1:** create `local_insider`: an instruction, the `get_local_notes` tool, and `output_key="local_notes"`. You already know how from Exercise 1.
-2. **TODO 2:** add `{local_notes}` to the planner's instruction, plus one line: never schedule anything that the local notes say is closed or unsafe.
-3. **TODO 3:** make `root_agent` a `SequentialAgent` that runs `local_insider`, then `planner_agent`.
+1. **TODO 1:** create `local_insider`, a small agent that looks up the local notes and saves its reply into state. Most of it you know from Exercise 1. The new part is `output_key`, and the comment in `agent.py` explains it.
+2. **TODO 2** (at the bottom of the file): make `root_agent` a `SequentialAgent` that runs `local_insider`, then `planner_agent`.
 
-Finish all three before you restart. `{local_notes}` only exists in state once `local_insider` has run, so with TODO 2 done and TODO 3 not, the planner runs on its own and gives an error.
+   Checkpoint: restart `adk web workshop`, pick `ex3_fixed_order` and send the golden prompt. `local_insider` runs first and `local_notes` is in state. Check the plan against the notes. The planner may glimpse them in the chat history, but nothing in its instruction tells it to follow them yet.
+3. **TODO 3** (inside `planner_agent`): put the notes into the planner's instruction, and add a rule in your own words for what to do with them. The comment in `agent.py` shows how an instruction reads a value from state.
 
-Then restart `adk web workshop` and pick `ex3_fixed_order`.
+Then restart `adk web workshop` again.
 
 ## Prove (3 min)
 
