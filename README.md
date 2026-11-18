@@ -1,5 +1,5 @@
-# Build a Multi-Agent Travel Assistant with Google ADK 
-### Presentation: [{ YOUR PRESENTATION NAME }](workshop/presentation_template.pdf)
+# Build a Multi-Agent Travel Assistant with Google ADK
+### Presentation: shared on the day of the workshop
 
 ## Workshop description
 In this hands-on workshop, participants will use Google ADK to build a travel assistant powered by multiple agents. We’ll explore how agents can work together, and how to give LLMs room to be creative while guiding them toward the task and outcomes you have in mind.
@@ -8,17 +8,25 @@ The workshop looks at moving beyond a single open-ended prompt towards agent wor
 
 ## Requirements
 * Comfortable writing basic Python functions
-* Python 3.11+ (required by the pinned `google-adk` version)
+* [Git](https://git-scm.com/downloads)
+* Python 3.11+ (required by the pinned `google-adk` version). If you use uv, it downloads a suitable Python for you.
 * A Google account, to create a free Gemini API key in [Google AI Studio](https://aistudio.google.com)
 * PyLadies Amsterdam uses [uv](https://docs.astral.sh/uv/) for dependency management (pip works too)
 
 ## Setup
 Please do this before the session. There is no time for it during the workshop.
 
-### 1. Install the dependencies
-With uv:
+### 1. Get the code
+```bash
+git clone https://github.com/pyladiesams/build-multi-agent-travel-assistant-googleadk-nov2026.git
+cd build-multi-agent-travel-assistant-googleadk-nov2026
+```
+All the commands below are run from this folder (the repo root).
 
-If `uv --version` gives `command not found`, install uv first, then open a new terminal:
+### 2. Install the dependencies
+**Option A: uv (recommended)**
+
+Check whether you have uv with `uv --version`. If you get `command not found`, install it and then open a new terminal:
 ```bash
 # macOS / Linux
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -26,43 +34,67 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Windows (PowerShell)
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
-Then:
+Then, from the repo root:
 ```bash
-git clone <github-url-of-workshop-repo>
-cd <name-of-repo>
-
 uv sync
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
 ```
-uv downloads a suitable Python if you don't have 3.11+.
-
-Or with pip (check first that `python --version` shows 3.11+):
+Activate the virtual environment:
 ```bash
-git clone <github-url-of-workshop-repo>
-cd <name-of-repo>
+# macOS / Linux
+source .venv/bin/activate
 
+# Windows
+.venv\Scripts\activate
+```
+
+**Option B: pip**
+
+Check first that `python --version` (or `python3 --version`) shows 3.11 or higher. Then, from the repo root:
+```bash
+# macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Windows
 python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Add your API key
-Create your own free key in [Google AI Studio](https://aistudio.google.com). Please don't share a key: free limits apply per project, and on `gemini-3.5-flash-lite` a project gets 15 requests per minute, which one table sharing a key would quickly use up.
+### 3. Add your API key
+Create your own free key in [Google AI Studio](https://aistudio.google.com) (click **Get API key**). Please don't share a key: free limits apply per project, and on `gemini-3.5-flash-lite` a project gets 15 requests per minute, which one table sharing a key would quickly use up.
 
-Copy `.env.example` to `.env` in the repo root and paste in your key:
+Copy the example file to `.env` in the repo root:
+```bash
+# macOS / Linux
+cp .env.example .env
+
+# Windows
+copy .env.example .env
+```
+Open `.env` in your editor and replace `paste-your-key-here` with your key:
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=paste-your-key-here
+GOOGLE_API_KEY=your-actual-key
 ```
+`.env` is in `.gitignore`, so your key won't be committed.
 
-### 3. Run the smoke test
-From the repo root, run:
+### 4. Run the smoke test
+With the virtual environment active, from the repo root run:
 ```bash
 adk web workshop
 ```
-Open http://localhost:8000, pick `ex0_hello` and say hi. If it replies, you're ready.
+Open http://localhost:8000, pick `ex0_hello` in the dropdown at the top left and say hi. If it replies, you're ready. Stop the server with `Ctrl+C`.
 
-On Windows, if `adk` isn't found, activate the venv again.
+If `adk` isn't found, the virtual environment isn't active: run the activate command from step 2 again. With uv you can also skip activation and run `uv run adk web workshop`.
+
+### 5. On the day
+We may still update the exercises before the session, so pull the latest version when you arrive:
+```bash
+git pull
+uv sync                           # or: pip install -r requirements.txt
+```
 
 ## Exercises
 | # | Exercise | Starter | Solution |
@@ -86,7 +118,7 @@ Each agent folder has its own `tools.py`, an `__init__.py` containing `from . im
 All exercises share the mock data in `data/`, so a change there affects every starter and solution. Each dataset has its own file, added when an exercise first needs it.
 
 ## Video record
-Re-watch [this YouTube stream](link)
+The link to the YouTube recording will be added here after the workshop.
 
 ## Credits
 This workshop was set up by @pyladiesams and @blutab
