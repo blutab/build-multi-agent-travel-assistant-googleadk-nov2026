@@ -48,7 +48,9 @@ def enforce_budget(tool, args, tool_context, tool_response):
 
     max_per_night = budget * HOTEL_SHARE / nights
 
-    # Level 2: get_hotel_details can reach the same data, so it needs the same rule.
+    # get_hotel_details can reach the same data, so it needs the same rule.
+    # Without this, "Show me the details for Mar Azul Beach Resort" would get
+    # round the filter below.
     if tool.name == "get_hotel_details":
         if real_cost_per_night(tool_response["hotel"]["name"]) > max_per_night:
             return {"status": "error", "message": "This hotel is over the budget."}
@@ -75,7 +77,7 @@ def enforce_budget(tool, args, tool_context, tool_response):
 
 
 def flag_budget(tool, args, tool_context, tool_response):
-    """Level 3: keeps every hotel, but labels each one. The model decides.
+    """Level 2: keeps every hotel, but labels each one. The model decides.
 
     Attach it instead of enforce_budget to compare a nudge with a rule.
     """
