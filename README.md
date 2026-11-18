@@ -118,7 +118,7 @@ Each agent folder has its own `tools.py`, an `__init__.py` containing `from . im
 All exercises share the mock data in `data/`, so a change there affects every starter and solution. Each dataset has its own file, added when an exercise first needs it.
 
 ## Video record
-The link to the YouTube recording will be added here after the workshop.
+Re-watch [this YouTube stream](https://www.youtube.com/live/YkeQV9zuog8)
 
 ## Credits
 This workshop was set up by @pyladiesams and @blutab
