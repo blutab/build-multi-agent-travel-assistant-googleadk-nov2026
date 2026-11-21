@@ -2,9 +2,9 @@ from google.adk.agents import Agent
 
 from .tools import get_hotel_details, search_flights, search_hotels
 
-# Example: an agent with one tool. It's about the weather, not travel, so don't
-# copy it as is. Notice that get_weather has no brackets: you hand the function to
-# the agent, and the model decides when to call it.
+# Example: an agent with one tool. It's about the weather, not travel,
+# so don't copy it as is. You hand the function to the agent,
+# and the model decides when to call it.
 #
 #     def get_weather(city: str) -> dict:
 #         """Gets today's weather for a city."""
@@ -17,7 +17,7 @@ from .tools import get_hotel_details, search_flights, search_hotels
 #         tools=[get_weather],
 #     )
 
-# TODO: create root_agent, an Agent with:
+# TODO: create root_agent, this Agent should have:
 #   - name: "tripmate"
 #   - model: "gemini-3.5-flash-lite"
 #   - instruction: describe TripMate, a friendly travel assistant. Tell it to use
