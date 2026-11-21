@@ -8,7 +8,7 @@ from .tools import get_hotel_details, get_local_notes, search_flights, search_ho
 #
 # You've built an Agent before, and planner_agent below is one to copy from.
 # Give local_insider:
-#   - the name "local_insider" and the same model as planner_agent
+#   - the name "local_insider" and the model : gemini-3.5-flash-lite
 #   - a description: one sentence saying what it knows about
 #   - an instruction for its job. It only sees the traveller's message, so
 #     tell it to find the destination there and look up its local notes.
@@ -26,14 +26,15 @@ from .tools import get_hotel_details, get_local_notes, search_flights, search_ho
 # Give local_insider output_key="local_notes". The planner reads the notes by
 # that exact name in TODO 3.
 
+# START YOUR CODE HERE (TODO 1)
+
+# END YOUR CODE HERE
+
 # This is TripMate from Exercise 2, now called planner_agent.
 planner_agent = Agent(
     name="planner_agent",
     model="gemini-3.5-flash-lite",
     description="Plans trips: flights, a hotel within budget, and a day-by-day plan.",
-    instruction="""You are TripMate, a friendly travel assistant.
-Use the tools to find flights and hotels, then suggest a trip
-with a day-by-day plan. Stay within the traveller's budget.""",
     # TODO 3 (do TODO 2 at the bottom of the file first): put the local notes
     # in the planner's instruction.
     #
@@ -45,10 +46,16 @@ with a day-by-day plan. Stay within the traveller's budget.""",
     #
     # and it would see "Today's forecast: Sunny, 24°C".
     #
-    # Add two things to the instruction above:
+    # Add two things to the instruction below:
     #   - the notes local_insider saved, using its output_key in curly brackets
     #   - one sentence telling the planner what to do with them. A beach day
     #     with a jellyfish warning is the kind of plan you want to stop.
+
+    # START YOUR CODE HERE (TODO 3)
+    instruction="""You are TripMate, a friendly travel assistant.
+Use the tools to find flights and hotels, then suggest a trip
+with a day-by-day plan. Stay within the traveller's budget.""",
+    # END YOUR CODE HERE
     tools=[search_flights, search_hotels, get_hotel_details, save_trip_details],
     after_tool_callback=enforce_budget,
 )
@@ -58,8 +65,11 @@ with a day-by-day plan. Stay within the traveller's budget.""",
 # every time:
 #     SequentialAgent(name=..., sub_agents=[...])
 #
-# Then restart and send the golden prompt. In the Traces tab, local_insider
+# Then restart and send the test prompt. In the Traces tab, local_insider
 # runs first, and the State tab has local_notes. Check the plan against the
 # notes: the planner may glimpse them in the chat history, but nothing in its
 # instruction tells it to follow them. TODO 3, in planner_agent above, does.
+
+# START YOUR CODE HERE (TODO 2)
 root_agent = planner_agent
+# END YOUR CODE HERE

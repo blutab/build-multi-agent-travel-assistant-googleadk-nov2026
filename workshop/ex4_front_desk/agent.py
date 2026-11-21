@@ -16,6 +16,8 @@ from .tools import (
     search_hotels,
 )
 
+# START YOUR CODE HERE
+
 # an agent that knows local closures, events, strikes and beach conditions
 # local_insider = Agent(
 #     name="local_insider",
@@ -45,3 +47,5 @@ from .tools import (
 # root_agent = Agent(
 #     name="concierge",
 # )
+
+# END YOUR CODE HERE

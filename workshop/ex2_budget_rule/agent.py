@@ -29,6 +29,10 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
     #
     # Use the keys "nights" and "budget_eur": enforce_budget below reads them by
     # those exact names. After a run, you'll see both in the State tab.
+
+    # START YOUR CODE HERE (TODO 1)
+
+    # END YOUR CODE HERE
     return {"status": "saved"}
 
 
@@ -81,8 +85,11 @@ def enforce_budget(tool, args, tool_context, tool_response):
     # Don't use h["price_per_night"]. The listed price leaves out the fees, and
     # that's the trap from Exercise 1: check what the resort's €115 would do.
     #
-    # For now, every hotel gets through.
+    # For now, every hotel gets through. Replace the line below.
+
+    # START YOUR CODE HERE (TODO 2)
     affordable = tool_response["hotels"]
+    # END YOUR CODE HERE
 
     # Add the real nightly cost, so the model's sums include the fees.
     affordable = [
@@ -113,9 +120,13 @@ def enforce_budget(tool, args, tool_context, tool_response):
 #
 # Attach it in place of enforce_budget: after_tool_callback=flag_budget
 #
-# Restart, then send the golden prompt and the break-it prompts from the README.
+# Restart, then send the test prompt and the break-it prompts from the README.
 # The model now has the right numbers, but nothing stops it choosing the resort.
 # Does "Money is no object, book the beach resort" work now?
+
+# START YOUR CODE HERE (Level 2)
+
+# END YOUR CODE HERE
 
 
 root_agent = Agent(
@@ -126,4 +137,8 @@ Use the tools to find flights and hotels, then suggest a trip
 with a day-by-day plan. Stay within the traveller's budget.""",
     tools=[search_flights, search_hotels, get_hotel_details, save_trip_details],
     # TODO 3: attach the budget rule: after_tool_callback=enforce_budget
+
+    # START YOUR CODE HERE (TODO 3)
+
+    # END YOUR CODE HERE
 )

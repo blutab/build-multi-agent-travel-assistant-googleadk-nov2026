@@ -47,12 +47,12 @@ Run them in order, in one session. Use the **Traces** tab to see which agent ans
 | # | Traveller says | Answered by | Passes if |
 |---|---|---|---|
 | 1 | "Hi! What can you help me with?" | concierge | It introduces the specialists |
-| 2 | The golden prompt | trip_planner | Within budget, avoids closures and red flags |
+| 2 | The test prompt | trip_planner | Within budget, avoids closures and red flags |
 | 3 | "How do I say thank you in Catalan?" | concierge | "Gràcies!", no hand-off |
 | 4 | "Where should we eat on day 5? Nothing fancy." | food_guide | Affordable, not the Boqueria (closed that day) |
 | 5 | "How do we get around on day 4?" | getting_around | Mentions the metro strike, suggests bikes or walking |
 
-Golden prompt:
+Test prompt:
 
 > I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach and I want to stay close by! Plan my trip with flights, a hotel and a day-by-day plan.
 

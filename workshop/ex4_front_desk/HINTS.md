@@ -44,7 +44,7 @@ trip_planner = SequentialAgent(
 )
 ```
 
-To check it on its own, add `root_agent = trip_planner` as the last line for now, restart, and send the golden prompt. Replace that line when you build the concierge.
+To check it on its own, add `root_agent = trip_planner` as the last line for now, restart, and send the test prompt. Replace that line when you build the concierge.
 
 </details>
 

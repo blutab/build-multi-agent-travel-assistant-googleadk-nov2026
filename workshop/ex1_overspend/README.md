@@ -6,13 +6,13 @@
 
 ## What to do
 
-1. Read `tools.py` to see the three tools. The mock data is in `data/` at the repo root.
-2. In `agent.py`, follow the TODO: create `root_agent` with a name, the model, an instruction and the three tools.
+1. [Optional] Read `tools.py` to see the three tools. The mock data is in `data/` at the repo root.
+2. In `agent.py`, follow the TODO: create `root_agent` using the example provided as an example of the syntax, with a name, the model, an instruction and the three tools.
 3. From the repo root, run `adk web workshop`, open http://localhost:8000, pick `ex1_overspend` and say hi.
 
 ## Break it
 
-Send the golden prompt 3 times, each in a new session:
+Send the test prompt 3 times, each in a new session:
 
 > I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach and I want to stay close by! Plan my trip with flights, a hotel and a day-by-day plan.
 

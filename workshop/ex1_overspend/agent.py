@@ -17,6 +17,8 @@ from .tools import get_hotel_details, search_flights, search_hotels
 #         tools=[get_weather],
 #     )
 
+
+
 # TODO: create root_agent, this Agent should have:
 #   - name: "tripmate"
 #   - model: "gemini-3.5-flash-lite"
@@ -25,4 +27,10 @@ from .tools import get_hotel_details, search_flights, search_hotels
 #     and stay within the traveller's budget.
 #   - tools: the three functions imported above
 #
-# The variable must be called root_agent, because that's the name adk web looks for.
+# The variable you assign your Agent to must be called root_agent, because
+# that's the name adk web looks for when it loads this file.
+
+# START YOUR CODE HERE
+
+
+# END YOUR CODE HERE
