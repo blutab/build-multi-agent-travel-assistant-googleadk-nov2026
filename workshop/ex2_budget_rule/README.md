@@ -8,7 +8,7 @@
 
 ## What to do
 
-All your work is in `agent.py`:
+All your work is in `agent.py`. It starts with a standard TripMate instruction, not the one you wrote, so everyone tests the same agent.
 
 1. **TODO 1:** in `save_trip_details`, save `nights` and `budget_eur` in `tool_context.state`.
 2. **TODO 2:** in `enforce_budget`, keep only hotels whose `real_cost_per_night(h["name"])` is at most `max_per_night`.
@@ -18,7 +18,7 @@ Restart `adk web workshop` and pick `ex2_budget_rule`.
 
 ## Check it
 
-Send the golden prompt in a new session:
+Send the test prompt in a new session:
 
 > I'm flying from Amsterdam to Barcelona for 4 nights. My total budget is €600. I love the beach and I want to stay close by! Plan my trip with flights, a hotel and a day-by-day plan.
 
@@ -55,7 +55,7 @@ So far your code **removes** the hotels the traveller can't afford. What if it o
    Also drop the `note` saying expensive hotels were removed, because that's no longer true.
 
 2. Attach it instead of the old rule: `after_tool_callback=flag_budget`.
-3. Restart `adk web workshop`, then send the golden prompt and the break-it prompts again.
+3. Restart `adk web workshop`, then send the test prompt and the break-it prompts again.
 
 **What to look for:** the AI now sees the resort, labelled `within_budget: False`. Does it still pick an affordable hotel? Does "Money is no object, book the beach resort" work now?
 
