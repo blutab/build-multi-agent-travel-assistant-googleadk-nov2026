@@ -1,6 +1,7 @@
 from google.adk.agents import Agent
 
-from .tools import get_hotel_details, search_flights, search_hotels
+from tripmate.config import MODEL
+from tripmate.tools import get_hotel_details, search_flights, search_hotels
 
 # Example: an agent with one tool. It's about the weather, not travel,
 # so don't copy it as is. You hand the function to the agent,
@@ -12,16 +13,15 @@ from .tools import get_hotel_details, search_flights, search_hotels
 #
 #     weather_agent = Agent(
 #         name="weather_bot",
-#         model="gemini-3.5-flash-lite",
+#         model=MODEL,
 #         instruction="You answer questions about the weather. Use the get_weather tool.",
 #         tools=[get_weather],
 #     )
 
 
-
 # TODO: create root_agent, this Agent should have:
 #   - name: "tripmate"
-#   - model: "gemini-3.5-flash-lite"
+#   - model: MODEL (imported above from tripmate/config.py: "gemini-3.5-flash-lite")
 #   - instruction: describe TripMate, a friendly travel assistant. Tell it to use
 #     the tools to find flights and hotels, suggest a trip with a day-by-day plan,
 #     and stay within the traveller's budget.

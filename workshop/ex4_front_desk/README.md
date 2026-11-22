@@ -18,7 +18,7 @@ There are no TODOs this time. `agent.py` has an outline, and `CHEATSHEET.md` in 
 concierge  (root_agent: answers quick questions, routes the rest)
  ├─ trip_planner     the Ex 3 SequentialAgent + a description
  │    ├─ local_insider   → state["local_notes"]
- │    └─ planner_agent   + budget rule from budget.py
+ │    └─ planner_agent   + budget rule from tripmate/budget.py
  ├─ food_guide       get_restaurants, reads {local_notes?} {budget_eur?} {nights?}
  └─ getting_around   (level 2) get_transport, reads {local_notes?}
 ```
@@ -32,7 +32,7 @@ concierge  (root_agent: answers quick questions, routes the rest)
 
 Give every specialist a clear `description`: that's what the concierge reads to decide who to call.
 
-`tools.py` has all the tools you need and `budget.py` has the budget rule. When ready, restart `adk web workshop` and pick `ex4_front_desk`.
+`agent.py` already imports every tool you need from `tripmate/tools.py`, the budget rule from `tripmate/budget.py` and `MODEL` from `tripmate/config.py`. When ready, restart `adk web workshop` and pick `ex4_front_desk`.
 
 ## Levels
 

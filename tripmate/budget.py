@@ -1,11 +1,9 @@
-"""The budget rule from Exercise 2. Nothing to change here."""
+"""The budget rule from Exercise 2, used from Exercise 3 on. Nothing to change here."""
 
 from google.adk.tools.tool_context import ToolContext
 
+from .config import HOTEL_SHARE
 from .tools import real_cost_per_night
-
-# Hotels may use at most 80% of the total budget, which leaves room for the flight.
-HOTEL_SHARE = 0.8
 
 
 def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -> dict:

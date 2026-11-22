@@ -6,8 +6,9 @@ acceptance tests. CHEATSHEET.md in the repo root has every pattern from today.
 
 from google.adk.agents import Agent, SequentialAgent
 
-from .budget import enforce_budget, save_trip_details
-from .tools import (
+from tripmate.budget import enforce_budget, save_trip_details
+from tripmate.config import MODEL
+from tripmate.tools import (
     get_hotel_details,
     get_local_notes,
     get_restaurants,

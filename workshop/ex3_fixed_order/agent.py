@@ -1,14 +1,20 @@
 from google.adk.agents import Agent, SequentialAgent
 
-from .budget import enforce_budget, save_trip_details
-from .tools import get_hotel_details, get_local_notes, search_flights, search_hotels
+from tripmate.budget import enforce_budget, save_trip_details
+from tripmate.config import MODEL
+from tripmate.tools import (
+    get_hotel_details,
+    get_local_notes,
+    search_flights,
+    search_hotels,
+)
 
 # TODO 1: create local_insider, a second Agent with one small job: read the
 # local notes for the destination and pass them on to the planner.
 #
 # You've built an Agent before, and planner_agent below is one to copy from.
 # Give local_insider:
-#   - the name "local_insider" and the model : gemini-3.5-flash-lite
+#   - the name "local_insider" and the model: MODEL (imported above)
 #   - a description: one sentence saying what it knows about
 #   - an instruction for its job. It only sees the traveller's message, so
 #     tell it to find the destination there and look up its local notes.
@@ -33,7 +39,7 @@ from .tools import get_hotel_details, get_local_notes, search_flights, search_ho
 # This is TripMate from Exercise 2, now called planner_agent.
 planner_agent = Agent(
     name="planner_agent",
-    model="gemini-3.5-flash-lite",
+    model=MODEL,
     description="Plans trips: flights, a hotel within budget, and a day-by-day plan.",
     # TODO 3 (do TODO 2 at the bottom of the file first): put the local notes
     # in the planner's instruction.
@@ -50,7 +56,6 @@ planner_agent = Agent(
     #   - the notes local_insider saved, using its output_key in curly brackets
     #   - one sentence telling the planner what to do with them. A beach day
     #     with a jellyfish warning is the kind of plan you want to stop.
-
     # START YOUR CODE HERE (TODO 3)
     instruction="""You are TripMate, a friendly travel assistant.
 Use the tools to find flights and hotels, then suggest a trip

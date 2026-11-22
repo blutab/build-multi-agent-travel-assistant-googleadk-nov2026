@@ -71,7 +71,7 @@ wheels = [
 [[package]]
 name = "build-multi-agent-travel-assistant-googleadk-nov2026"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "google-adk" },
 ]

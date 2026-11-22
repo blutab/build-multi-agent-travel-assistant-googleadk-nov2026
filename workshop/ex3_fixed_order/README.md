@@ -11,7 +11,7 @@
 
 ## What to do
 
-Your work is in `agent.py`. `tools.py` now has `get_local_notes`, and the budget rule from Exercise 2 is in `budget.py`.
+Your work is in `agent.py`. You now also import `get_local_notes` from `tripmate/tools.py`, and the budget rule from Exercise 2 from `tripmate/budget.py`.
 
 1. **TODO 1:** create `local_insider`, an agent that looks up the local notes and saves its reply with `output_key`.
 2. **TODO 2** (bottom of the file): make `root_agent` a `SequentialAgent` that runs `local_insider`, then `planner_agent`.

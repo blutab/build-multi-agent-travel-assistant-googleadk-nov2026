@@ -1,7 +1,14 @@
+"""Exercise 4: build TripMate's front desk from scratch.
+
+The README has the target architecture, what each agent should do, and the
+acceptance tests. CHEATSHEET.md in the repo root has every pattern from today.
+"""
+
 from google.adk.agents import Agent, SequentialAgent
 
-from .budget import enforce_budget, save_trip_details
-from .tools import (
+from tripmate.budget import enforce_budget, save_trip_details
+from tripmate.config import MODEL
+from tripmate.tools import (
     get_hotel_details,
     get_local_notes,
     get_restaurants,
@@ -10,10 +17,11 @@ from .tools import (
     search_hotels,
 )
 
-# Exercise 3's team, with root_agent renamed to trip_planner and a description added.
+# START YOUR CODE HERE
+# an agent that knows local closures, events, strikes and beach conditions
 local_insider = Agent(
     name="local_insider",
-    model="gemini-3.5-flash-lite",
+    model=MODEL,
     description="Knows local closures, events, strikes and beach conditions.",
     instruction="""Find the destination in the traveller's message and call
 get_local_notes for it. Reply with one short line per day.""",
@@ -21,9 +29,10 @@ get_local_notes for it. Reply with one short line per day.""",
     output_key="local_notes",
 )
 
+# an agent that plans flights, a hotel within budget and a day-by-day plan
 planner_agent = Agent(
     name="planner_agent",
-    model="gemini-3.5-flash-lite",
+    model=MODEL,
     description="Plans trips: flights, a hotel within budget, and a day-by-day plan.",
     instruction="""You are TripMate, a friendly travel assistant.
 Use the tools to find flights and hotels, then suggest a trip
@@ -37,6 +46,7 @@ Never schedule anything the local notes say is closed or unsafe.""",
     after_tool_callback=enforce_budget,
 )
 
+# a team that always runs local_insider first, then planner_agent
 trip_planner = SequentialAgent(
     name="trip_planner",
     description="Plans a complete trip: checks local notes, then finds flights "
@@ -44,10 +54,10 @@ trip_planner = SequentialAgent(
     sub_agents=[local_insider, planner_agent],
 )
 
-
+# an agent that guides travellers through the food scene
 food_guide = Agent(
     name="food_guide",
-    model="gemini-3.5-flash-lite",
+    model=MODEL,
     description="Recommends restaurants and food markets at the destination.",
     instruction="""Recommend places to eat using get_restaurants.
 Local notes: {local_notes?}
@@ -56,9 +66,10 @@ Skip anything the local notes say is closed, and keep prices sensible.""",
     tools=[get_restaurants],
 )
 
-getting_around = Agent(  # level 2
+# level 2: an agent that explains how to get around
+getting_around = Agent(
     name="getting_around",
-    model="gemini-3.5-flash-lite",
+    model=MODEL,
     description="Explains how to get to and around the destination.",
     instruction="""Suggest ways to get around using get_transport.
 Local notes: {local_notes?}
@@ -66,12 +77,14 @@ Warn about strikes or closures in the local notes and offer alternatives.""",
     tools=[get_transport],
 )
 
+# the front desk: answers quick questions itself and routes the rest
 root_agent = Agent(
     name="concierge",
-    model="gemini-3.5-flash-lite",
+    model=MODEL,
     instruction="""You are the front desk of TripMate. Greet travellers and
 answer quick general questions yourself (for example, simple phrases
 in the local language). Hand trip planning, restaurant tips and
 transport advice to the right specialist.""",
     sub_agents=[trip_planner, food_guide, getting_around],
 )
+# END YOUR CODE HERE

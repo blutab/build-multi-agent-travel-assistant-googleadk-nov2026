@@ -1,15 +1,13 @@
 from google.adk.agents import Agent
 from google.adk.tools.tool_context import ToolContext
 
-from .tools import (
+from tripmate.config import HOTEL_SHARE, MODEL
+from tripmate.tools import (
     get_hotel_details,
     real_cost_per_night,
     search_flights,
     search_hotels,
 )
-
-# Hotels may use at most 80% of the total budget, which leaves room for the flight.
-HOTEL_SHARE = 0.8
 
 
 def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -> dict:
@@ -76,7 +74,7 @@ def enforce_budget(tool, args, tool_context, tool_response):
     # Build a new list with only the hotels whose real cost is at most
     # max_per_night.
     #
-    # To get the real cost, use "real_cost_per_night" function, imported from tools.py.
+    # To get the real cost, use "real_cost_per_night" function, imported from tripmate/tools.py.
     # Give it a hotel's name (a string), and it returns that hotel's nightly
     # price plus its fee at check-in (a number), read from data/hotels.json:
     #
@@ -93,8 +91,7 @@ def enforce_budget(tool, args, tool_context, tool_response):
 
     # Add the real nightly cost, so the model's sums include the fees.
     affordable = [
-        {**h, "real_cost_per_night": real_cost_per_night(h["name"])}
-        for h in affordable
+        {**h, "real_cost_per_night": real_cost_per_night(h["name"])} for h in affordable
     ]
 
     return {
@@ -131,14 +128,12 @@ def enforce_budget(tool, args, tool_context, tool_response):
 
 root_agent = Agent(
     name="tripmate",
-    model="gemini-3.5-flash-lite",
+    model=MODEL,
     instruction="""You are TripMate, a friendly travel assistant.
 Use the tools to find flights and hotels, then suggest a trip
 with a day-by-day plan. Stay within the traveller's budget.""",
     tools=[search_flights, search_hotels, get_hotel_details, save_trip_details],
     # TODO 3: attach the budget rule: after_tool_callback=enforce_budget
-
     # START YOUR CODE HERE (TODO 3)
-
     # END YOUR CODE HERE
 )

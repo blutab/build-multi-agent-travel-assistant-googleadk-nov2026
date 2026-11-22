@@ -113,9 +113,14 @@ Before the workshop, regenerate `requirements.txt` after any dependency change:
 ```bash
 uv export --no-dev --no-hashes -o requirements.txt
 ```
-Each agent folder has its own `tools.py`, an `__init__.py` containing `from . import agent`, and an `agent.py` that defines `root_agent`.
+Each agent folder has an `__init__.py` containing `from . import agent` and an `agent.py` that defines `root_agent`. Everything the exercises share lives in the `tripmate/` package at the repo root, which `uv sync` / `pip install -r requirements.txt` installs:
 
-All exercises share the mock data in `data/`, so a change there affects every starter and solution. Each dataset has its own file, added when an exercise first needs it.
+- `tripmate/config.py`: settings such as the model name and the hotel share of the budget. Change them here, once.
+- `tripmate/data.py`: loads the mock data from `data/`.
+- `tripmate/tools.py`: every tool the agents can call.
+- `tripmate/budget.py`: the budget rule from Exercise 2, used from Exercise 3 on.
+
+Instead of calling third-party APIs to fetch flights, hotels and other travel data, the workshop uses mock data: JSON files in `data/` that imitate what those APIs would return.
 
 ## Video record
 Re-watch [this YouTube stream](https://www.youtube.com/live/YkeQV9zuog8)

@@ -1,19 +1,9 @@
-"""The tools the agent can call. Nothing to change here."""
+"""The tools the agents can call. Nothing to change here.
 
-import json
-from pathlib import Path
+Each exercise imports only the tools it needs.
+"""
 
-# All exercises share the mock data in the data/ folder at the repo root.
-DATA_DIR = Path(__file__).resolve().parents[2] / "data"
-
-
-def _load(name: str) -> dict:
-    return json.loads((DATA_DIR / f"{name}.json").read_text(encoding="utf-8"))
-
-
-FLIGHTS = _load("flights")
-HOTELS = _load("hotels")
-LOCAL_NOTES = _load("local_notes")
+from .data import FLIGHTS, HOTELS, LOCAL_NOTES, RESTAURANTS, TRANSPORT
 
 
 def search_flights(origin: str, destination: str) -> dict:
@@ -94,3 +84,27 @@ def get_local_notes(city: str) -> dict:
     if not notes:
         return {"status": "error", "message": f"No local notes for {city}."}
     return {"status": "success", "notes": notes}
+
+
+def get_restaurants(city: str) -> dict:
+    """Finds restaurants and food markets in a city, with average prices.
+
+    Args:
+        city: The city to search in, for example "Barcelona".
+    """
+    restaurants = RESTAURANTS.get(city.strip().lower())
+    if not restaurants:
+        return {"status": "error", "message": f"No restaurants found in {city}."}
+    return {"status": "success", "restaurants": restaurants}
+
+
+def get_transport(city: str) -> dict:
+    """Finds ways to get to and around a city, with prices.
+
+    Args:
+        city: The city to search in, for example "Barcelona".
+    """
+    options = TRANSPORT.get(city.strip().lower())
+    if not options:
+        return {"status": "error", "message": f"No transport options for {city}."}
+    return {"status": "success", "options": options}

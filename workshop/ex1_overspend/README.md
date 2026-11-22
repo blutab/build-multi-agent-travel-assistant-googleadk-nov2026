@@ -6,7 +6,7 @@
 
 ## What to do
 
-1. [Optional] Read `tools.py` to see the three tools. The mock data is in `data/` at the repo root.
+1. [Optional] Read `tripmate/tools.py` at the repo root to see the tools. The mock data is in `data/` at the repo root.
 2. In `agent.py`, follow the TODO: create `root_agent` using the example provided as an example of the syntax, with a name, the model, an instruction and the three tools.
 3. From the repo root, run `adk web workshop`, open http://localhost:8000, pick `ex1_overspend` and say hi.
 
