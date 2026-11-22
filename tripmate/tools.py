@@ -63,6 +63,8 @@ def real_cost_per_night(hotel_name: str) -> float:
     against the data, whatever the model saw.
     """
     hotel = _find_hotel(hotel_name)
+    if not hotel:
+        raise ValueError(f"No hotel called {hotel_name!r} in data/hotels.json.")
     return hotel["price_per_night"] + hotel["fee_at_checkin"]
 
 

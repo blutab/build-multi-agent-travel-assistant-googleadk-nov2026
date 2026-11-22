@@ -1,5 +1,6 @@
 """The budget rule from Exercise 2, used from Exercise 3 on. Nothing to change here."""
 
+from google.adk.tools.base_tool import BaseTool
 from google.adk.tools.tool_context import ToolContext
 
 from .config import HOTEL_SHARE
@@ -18,7 +19,9 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
     return {"status": "saved"}
 
 
-def enforce_budget(tool, args, tool_context, tool_response):
+def enforce_budget(
+    tool: BaseTool, args: dict, tool_context: ToolContext, tool_response: dict
+) -> dict | None:
     """Runs after every tool call. Hides hotels the traveller can't afford,
     in search results and in hotel details.
 

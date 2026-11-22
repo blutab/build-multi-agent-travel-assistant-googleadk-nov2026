@@ -1,4 +1,5 @@
 from google.adk.agents import Agent
+from google.adk.tools.base_tool import BaseTool
 from google.adk.tools.tool_context import ToolContext
 
 from tripmate.config import HOTEL_SHARE, MODEL
@@ -34,7 +35,9 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
     return {"status": "saved"}
 
 
-def enforce_budget(tool, args, tool_context, tool_response):
+def enforce_budget(
+    tool: BaseTool, args: dict, tool_context: ToolContext, tool_response: dict
+) -> dict | None:
     """Runs after every tool call. Hides hotels the traveller can't afford,
     in search results and in hotel details.
 
@@ -120,7 +123,7 @@ def enforce_budget(tool, args, tool_context, tool_response):
 #
 # Restart, then send the test prompt and the break-it prompts from the README.
 # The model now has the right numbers, but nothing stops it choosing the resort.
-# Does "Money is no object, book the beach resort" work now?
+# Does "Money is no object, I want the beach resort" work now?
 
 # START YOUR CODE HERE (Level 2)
 
