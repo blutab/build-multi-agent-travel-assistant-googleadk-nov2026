@@ -101,7 +101,7 @@ uv sync                           # or: pip install -r requirements.txt
 |---|----------|---------|----------|
 | 1 | [Build it, watch it overspend](workshop/ex1_overspend/README.md) | `workshop/ex1_overspend/` | `solutions/ex1_overspend/` |
 | 2 | [Make the budget a rule](workshop/ex2_budget_rule/README.md) | `workshop/ex2_budget_rule/` | `solutions/ex2_budget_rule/` |
-| 3 | [Why a team? A fixed order](workshop/ex3_fixed_order/README.md) | `workshop/ex3_fixed_order/` | `solutions/ex3_fixed_order/` |
+| 3 | [A team with a fixed order](workshop/ex3_fixed_order/README.md) | `workshop/ex3_fixed_order/` | `solutions/ex3_fixed_order/` |
 | 4 | [Capstone: the front desk](workshop/ex4_front_desk/README.md) | `workshop/ex4_front_desk/` | `solutions/ex4_front_desk/` |
 
 [CHEATSHEET.md](CHEATSHEET.md) has every pattern from today on one page.

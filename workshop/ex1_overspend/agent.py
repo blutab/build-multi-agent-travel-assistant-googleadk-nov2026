@@ -21,7 +21,7 @@ from tripmate.tools import get_hotel_details, search_flights, search_hotels
 
 # TODO: create root_agent, this Agent should have:
 #   - name: "tripmate"
-#   - model: MODEL (imported above from tripmate/config.py: "gemini-3.5-flash-lite")
+#   - model: MODEL (imported above from tripmate/config.py)
 #   - instruction: describe TripMate, a friendly travel assistant. Tell it to use
 #     the tools to find flights and hotels, suggest a trip with a day-by-day plan,
 #     and stay within the traveller's budget.
