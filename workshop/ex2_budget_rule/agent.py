@@ -80,7 +80,7 @@ def enforce_budget(tool, args, tool_context, tool_response):
     #
     #     real_cost_per_night("Hotel Gràcia")   # 85 + 10 fee = 95
     #
-    # Don't use h["price_per_night"]. The listed price leaves out the fees, and
+    # Don't use hotel["price_per_night"]. The listed price leaves out the fees, and
     # that's the trap from Exercise 1: check what the resort's €115 would do.
     #
     # For now, every hotel gets through. Replace the line below.
@@ -91,7 +91,8 @@ def enforce_budget(tool, args, tool_context, tool_response):
 
     # Add the real nightly cost, so the model's sums include the fees.
     affordable = [
-        {**h, "real_cost_per_night": real_cost_per_night(h["name"])} for h in affordable
+        {**hotel, "real_cost_per_night": real_cost_per_night(hotel["name"])}
+        for hotel in affordable
     ]
 
     return {
@@ -109,7 +110,7 @@ def enforce_budget(tool, args, tool_context, tool_response):
 #
 # Write a new callback, flag_budget(tool, args, tool_context, tool_response),
 # that keeps every hotel but adds flags to each hotel:
-#     "real_cost_per_night": real_cost_per_night(h["name"])
+#     "real_cost_per_night": real_cost_per_night(hotel["name"])
 #     "within_budget": True if the hotel fits the budget, else False
 #
 # Check everything you send back to the model, not just the hotels. Does any

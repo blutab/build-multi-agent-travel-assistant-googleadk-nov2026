@@ -34,7 +34,8 @@ def search_hotels(city: str) -> dict:
         return {"status": "error", "message": f"No hotels found in {city}."}
     # The search shows headline prices only. Fees are in the hotel details.
     listings = [
-        {k: v for k, v in hotel.items() if k != "fee_at_checkin"} for hotel in hotels
+        {key: value for key, value in hotel.items() if key != "fee_at_checkin"}
+        for hotel in hotels
     ]
     return {"status": "success", "hotels": listings}
 

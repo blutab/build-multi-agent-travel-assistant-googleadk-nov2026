@@ -49,15 +49,15 @@ def enforce_budget(tool, args, tool_context, tool_response):
         return None
 
     affordable = [
-        h
-        for h in tool_response["hotels"]
-        if real_cost_per_night(h["name"]) <= max_per_night
+        hotel
+        for hotel in tool_response["hotels"]
+        if real_cost_per_night(hotel["name"]) <= max_per_night
     ]
 
     # Add the real nightly cost, so the model's sums include the fees.
     affordable = [
-        {**h, "real_cost_per_night": real_cost_per_night(h["name"])}
-        for h in affordable
+        {**hotel, "real_cost_per_night": real_cost_per_night(hotel["name"])}
+        for hotel in affordable
     ]
 
     return {

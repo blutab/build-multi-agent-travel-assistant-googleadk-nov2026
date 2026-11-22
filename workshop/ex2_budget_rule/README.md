@@ -11,7 +11,7 @@
 All your work is in `agent.py`. It starts with a standard TripMate instruction, not the one you wrote, so everyone tests the same agent.
 
 1. **TODO 1:** in `save_trip_details`, save `nights` and `budget_eur` in `tool_context.state`.
-2. **TODO 2:** in `enforce_budget`, keep only hotels whose `real_cost_per_night(h["name"])` is at most `max_per_night`.
+2. **TODO 2:** in `enforce_budget`, keep only hotels whose `real_cost_per_night(hotel["name"])` is at most `max_per_night`.
 3. **TODO 3:** attach the rule to the agent with `after_tool_callback=enforce_budget`.
 
 Restart `adk web workshop` and pick `ex2_budget_rule`.
@@ -49,7 +49,7 @@ So far your code **removes** the hotels the traveller can't afford. What if it o
    ```
 
    It works like `enforce_budget`, but it keeps **every** hotel and adds two fields to each one:
-   - `real_cost_per_night`: the price including fees, from `real_cost_per_night(h["name"])`
+   - `real_cost_per_night`: the price including fees, from `real_cost_per_night(hotel["name"])`
    - `within_budget`: `True` if that cost is at most `max_per_night`, otherwise `False`
 
    Also drop the `note` saying expensive hotels were removed, because that's no longer true.

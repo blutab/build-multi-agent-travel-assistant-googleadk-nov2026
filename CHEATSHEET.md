@@ -94,7 +94,7 @@ CARD = re.compile(r"\b(?:\d[ -]?){13,16}\b")
 
 def block_card_numbers(callback_context, llm_request):
     last = llm_request.contents[-1]
-    text = " ".join(p.text or "" for p in last.parts or [])
+    text = " ".join(part.text or "" for part in last.parts or [])
     if CARD.search(text):
         return LlmResponse(content=types.Content(role="model", parts=[
             types.Part(text="Please don't share card numbers here.")]))
@@ -107,7 +107,7 @@ root_agent = Agent(..., before_model_callback=block_card_numbers)
 
 ```python
 def no_refund_promises(callback_context, llm_response):
-    text = "".join(p.text or "" for p in (llm_response.content.parts if llm_response.content else []))
+    text = "".join(part.text or "" for part in (llm_response.content.parts if llm_response.content else []))
     if "full refund" in text.lower():
         return LlmResponse(content=types.Content(role="model", parts=[
             types.Part(text="Refunds depend on the booking. Please check with the hotel.")]))
