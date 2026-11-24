@@ -89,7 +89,7 @@ Open http://localhost:8000, pick `ex0_hello` in the dropdown at the top left and
 
 If `adk` isn't found, the virtual environment isn't active: run the activate command from step 2 again. With uv you can also skip activation and run `uv run adk web workshop`.
 
-If a reply fails with `503 UNAVAILABLE`, the model is overloaded. Wait a minute and try again, or change `MODEL` in `tripmate/config.py` to `gemini-3.5-flash` and restart `adk web`.
+If a reply fails with `503 UNAVAILABLE`, the model is busy. Wait a minute and try again.
 
 ### 5. On the day
 We may still update the exercises before the session, so pull the latest version when you arrive:
