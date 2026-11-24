@@ -54,6 +54,8 @@ ADK passes the arguments by keyword, so the parameter names must be exactly the 
 | `before_tool_callback` | Before a tool runs | `tool`, `args`, `tool_context` | Skip the tool and use this dict as its result | Block a booking over budget; fix bad arguments; limit calls |
 | `after_tool_callback` | After a tool runs | `tool`, `args`, `tool_context`, `tool_response` | Replace what the model sees | Exercise 2's budget filter; redact internal fields |
 
+`types.Content` comes from `from google.genai import types`, and `LlmResponse` from `from google.adk.models import LlmResponse`.
+
 `callback_context.state` and `tool_context.state` are the same session state.
 
 ### after_tool_callback: change what the model sees

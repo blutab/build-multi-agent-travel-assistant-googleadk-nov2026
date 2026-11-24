@@ -47,8 +47,15 @@ def enforce_budget(
 
     # get_hotel_details can reach the same data, so it needs the same rule.
     if tool.name == "get_hotel_details":
-        if real_cost_per_night(tool_response["hotel"]["name"]) > max_per_night:
-            return {"status": "error", "message": "This hotel is over the budget."}
+        hotel_name = tool_response["hotel"]["name"]
+        hotel_cost = real_cost_per_night(hotel_name)
+        if hotel_cost > max_per_night:
+            return {
+                "status": "error",
+                "message": f"{hotel_name} costs €{hotel_cost:.0f}/night incl. fees, "
+                f"over this trip's limit of €{max_per_night:.0f}/night. "
+                "Tell the traveller, and suggest a hotel from search_hotels instead.",
+            }
         return None
 
     affordable = [

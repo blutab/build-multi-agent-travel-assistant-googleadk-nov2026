@@ -11,6 +11,7 @@ from tripmate.tools import (
 )
 
 
+# The AI only sees the names, types and docstring, so use descriptive names.
 def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -> dict:
     """Saves the trip length and total budget. Call this before searching for hotels.
 
@@ -65,8 +66,15 @@ def enforce_budget(
     # Without this, "Show me the details for Mar Azul Beach Resort" would get
     # round the filter below.
     if tool.name == "get_hotel_details":
-        if real_cost_per_night(tool_response["hotel"]["name"]) > max_per_night:
-            return {"status": "error", "message": "This hotel is over the budget."}
+        hotel_name = tool_response["hotel"]["name"]
+        hotel_cost = real_cost_per_night(hotel_name)
+        if hotel_cost > max_per_night:
+            return {
+                "status": "error",
+                "message": f"{hotel_name} costs €{hotel_cost:.0f}/night incl. fees, "
+                f"over this trip's limit of €{max_per_night:.0f}/night. "
+                "Tell the traveller, and suggest a hotel from search_hotels instead.",
+            }
         return None
 
     # TODO 2: keep only the hotels the traveller can afford.

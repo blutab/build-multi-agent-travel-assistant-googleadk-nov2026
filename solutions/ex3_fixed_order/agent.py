@@ -15,7 +15,8 @@ from tripmate.tools import (
 # You've built an Agent before, and planner_agent below is one to copy from.
 # Give local_insider:
 #   - the name "local_insider" and the model: MODEL (imported above)
-#   - a description: one sentence saying what it knows about
+#   - a description: one short sentence about what this agent does.
+#     Other agents read it to decide when to use this one.
 #   - an instruction for its job. It only sees the traveller's message, so
 #     tell it to find the destination there and look up its local notes.
 #     Keep its reply short: the planner reads it, not the traveller.
