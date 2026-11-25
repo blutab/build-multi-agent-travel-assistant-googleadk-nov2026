@@ -14,7 +14,7 @@ The workshop looks at moving beyond a single open-ended prompt towards agent wor
 * PyLadies Amsterdam uses [uv](https://docs.astral.sh/uv/) for dependency management (pip works too)
 
 ## Setup
-Please do this before the session. There is no time for it during the workshop.
+If you can, set this up before the session, so you can start building straight away.
 
 ### 1. Get the code
 ```bash
