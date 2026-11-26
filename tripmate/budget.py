@@ -26,7 +26,7 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
 def enforce_budget(
     tool: BaseTool, args: dict, tool_context: ToolContext, tool_response: dict
 ) -> dict | None:
-    """Runs after every tool call. Filters hotels above the stored accommodation cap,
+    """Runs after every tool call. Hides hotels the traveller can't afford,
     in search results and in hotel details.
 
     It checks the real cost from our data, not the prices the model saw.
@@ -40,7 +40,7 @@ def enforce_budget(
 
     budget = tool_context.state.get("budget_eur")
     nights = tool_context.state.get("nights")
-    if not budget or not nights or budget <= 0 or nights <= 0:
+    if not budget or not nights:
         return {
             "status": "error",
             "message": "Ask for the budget and number of nights, "
