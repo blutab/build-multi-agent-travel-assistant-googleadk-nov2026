@@ -14,12 +14,9 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
         nights: How many nights the traveller is staying.
         budget_eur: The traveller's total budget for the whole trip, in euros.
     """
-    # Keep this workshop's trip details fixed within one session.
+    # Validate trip details before saving them.
     if nights <= 0 or budget_eur <= 0:
         return {"status": "error", "message": "Budget and nights must be positive."}
-    for key, value in (("nights", nights), ("budget_eur", budget_eur)):
-        if key in tool_context.state and tool_context.state[key] != value:
-            return {"status": "error", "message": "Start a new session to change trip details."}
 
     tool_context.state["nights"] = nights
     tool_context.state["budget_eur"] = budget_eur
