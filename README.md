@@ -14,7 +14,7 @@ The workshop looks at moving beyond a single open-ended prompt towards agent wor
 * PyLadies Amsterdam uses [uv](https://docs.astral.sh/uv/) for dependency management (pip works too)
 
 ## Setup
-Please do this before the session. There is no time for it during the workshop.
+If you can, set this up before the session, so you can start building straight away.
 
 ### 1. Get the code
 ```bash
@@ -89,6 +89,8 @@ Open http://localhost:8000, pick `ex0_hello` in the dropdown at the top left and
 
 If `adk` isn't found, the virtual environment isn't active: run the activate command from step 2 again. With uv you can also skip activation and run `uv run adk web workshop`.
 
+If a reply fails with `503 UNAVAILABLE`, the model is busy. Wait a minute and try again.
+
 ### 5. On the day
 We may still update the exercises before the session, so pull the latest version when you arrive:
 ```bash
@@ -97,14 +99,30 @@ uv sync                           # or: pip install -r requirements.txt
 ```
 
 ## Exercises
-The exercises will be added to this repo before the workshop. Run `git pull` on the day (see step 5 above) to get them.
+| # | Exercise | Starter | Solution |
+|---|----------|---------|----------|
+| 1 | [Build it, watch it overspend](workshop/ex1_overspend/README.md) | `workshop/ex1_overspend/` | `solutions/ex1_overspend/` |
+| 2 | [Make the budget a rule](workshop/ex2_budget_rule/README.md) | `workshop/ex2_budget_rule/` | `solutions/ex2_budget_rule/` |
+| 3 | [A team with a fixed order](workshop/ex3_fixed_order/README.md) | `workshop/ex3_fixed_order/` | `solutions/ex3_fixed_order/` |
+| 4 | [Capstone: the front desk](workshop/ex4_front_desk/README.md) | `workshop/ex4_front_desk/` | `solutions/ex4_front_desk/` |
+
+[CHEATSHEET.md](CHEATSHEET.md) has every pattern from today on one page.
+
+To run a solution, use `adk web solutions`. After changing code, restart `adk web` and start a new session.
 
 ## For the workshop giver
 Before the workshop, regenerate `requirements.txt` after any dependency change:
 ```bash
 uv export --no-dev --no-hashes -o requirements.txt
 ```
-Each agent folder has its own `tools.py`, an `__init__.py` containing `from . import agent`, and an `agent.py` that defines `root_agent`.
+Each agent folder has an `__init__.py` containing `from . import agent` and an `agent.py` that defines `root_agent`. Everything the exercises share lives in the `tripmate/` package at the repo root, which `uv sync` / `pip install -r requirements.txt` installs:
+
+- `tripmate/config.py`: settings such as the model name and the hotel share of the budget. Change them here, once.
+- `tripmate/data.py`: loads the mock data from `data/`.
+- `tripmate/tools.py`: every tool the agents can call.
+- `tripmate/budget.py`: the budget rule from Exercise 2, used from Exercise 3 on.
+
+Instead of calling third-party APIs to fetch flights, hotels and other travel data, the workshop uses mock data: JSON files in `data/` that imitate what those APIs would return.
 
 ## Video record
 Re-watch [this YouTube stream](https://www.youtube.com/live/YkeQV9zuog8)

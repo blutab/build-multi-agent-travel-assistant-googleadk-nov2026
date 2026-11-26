@@ -2,8 +2,10 @@
 
 from google.adk.agents import Agent
 
+from tripmate.config import MODEL
+
 root_agent = Agent(
     name="hello",
-    model="gemini-3.5-flash-lite",
+    model=MODEL,
     instruction="Greet the traveller in one short, friendly sentence.",
 )
