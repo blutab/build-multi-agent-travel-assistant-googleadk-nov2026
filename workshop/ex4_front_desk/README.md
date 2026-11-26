@@ -10,6 +10,13 @@ Trip plans must still stay within budget and respect the local news.
 
 **You'll learn:** how one agent can pass a question to another. You list the helpers in `sub_agents=[...]` and give each one a short `description` of what it does. The concierge reads those descriptions to decide who should answer, just like the AI reads a tool's docstring.
 
+You used `sub_agents` in Exercise 3 too, but it works differently here:
+
+- On a `SequentialAgent` (Exercise 3), code runs every sub-agent, in the order of the list.
+- On an `Agent` (this exercise), the model picks **one** sub-agent, or none and answers itself. ADK gives it a hidden `transfer_to_agent` tool to do the hand-off.
+
+A hand-off is not like a tool call: the answer doesn't come back to the concierge. The specialist takes over the conversation and replies to the traveller directly.
+
 There are no TODOs this time. `agent.py` has an outline, and `CHEATSHEET.md` in the repo root has every pattern you need. If you get stuck, see [Hints](#hints) below.
 
 ## What to build
@@ -42,7 +49,7 @@ Give every specialist a clear `description`: that's what the concierge reads to 
 
 ## Acceptance tests
 
-Run them in order, in one session. Use the **Traces** tab to see which agent answered.
+Run them in order, in one session. Use the **Traces** tab to see which agent answered: a hand-off shows up as a `transfer_to_agent` call.
 
 | # | Traveller says | Answered by | Passes if |
 |---|---|---|---|
@@ -61,6 +68,7 @@ Test prompt:
 - `{local_notes?}` with a `?` means "empty if not in state yet" instead of an error.
 - No reply and no error in `adk web`? `root_agent` isn't defined yet.
 - Wrong specialist answering? Improve the descriptions first.
+- A question answered by the wrong specialist after a hand-off? After `food_guide` or `getting_around` answers, your next message goes to that specialist first, and it can pass it back to the concierge. If it answers anyway, tell it in its instruction to hand back anything outside its job.
 - "Already has a parent" error? An agent can have only one parent, so list `trip_planner` in one place only.
 
 ## Hints

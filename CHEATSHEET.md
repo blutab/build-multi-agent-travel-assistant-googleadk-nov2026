@@ -160,6 +160,14 @@ root_agent = SequentialAgent(
 
 An `Agent` with `sub_agents` reads each sub-agent's `description` and hands the conversation to the best one. Control passes to that specialist; it doesn't come back like a tool result.
 
+Same keyword as Exercise 3, different behaviour:
+
+| | `sub_agents` on a `SequentialAgent` | `sub_agents` on an `Agent` |
+|---|---|---|
+| Who decides | Code | The model, using each `description` |
+| What runs | Every sub-agent, in list order | One sub-agent, or none |
+| In Traces | Each agent, one after another | A `transfer_to_agent` call |
+
 ```python
 food_guide = Agent(
     name="food_guide",
