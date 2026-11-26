@@ -30,6 +30,13 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
     # Use the keys "nights" and "budget_eur": enforce_budget below reads them by
     # those exact names. After a run, you'll see both in the State tab.
 
+    # Keep this workshop's trip details fixed within one session.
+    if nights <= 0 or budget_eur <= 0:
+        return {"status": "error", "message": "Budget and nights must be positive."}
+    for key, value in (("nights", nights), ("budget_eur", budget_eur)):
+        if key in tool_context.state and tool_context.state[key] != value:
+            return {"status": "error", "message": "Start a new session to change trip details."}
+
     # START YOUR CODE HERE (TODO 1)
 
     # END YOUR CODE HERE
@@ -39,7 +46,7 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
 def enforce_budget(
     tool: BaseTool, args: dict, tool_context: ToolContext, tool_response: dict
 ) -> dict | None:
-    """Runs after every tool call. Hides hotels the traveller can't afford,
+    """Runs after every tool call. Filters hotels above the stored accommodation cap,
     in search results and in hotel details.
 
     It checks the real cost from our data, not the prices the model saw.
@@ -53,7 +60,7 @@ def enforce_budget(
 
     budget = tool_context.state.get("budget_eur")
     nights = tool_context.state.get("nights")
-    if not budget or not nights:
+    if not budget or not nights or budget <= 0 or nights <= 0:
         return {
             "status": "error",
             "message": "Ask for the budget and number of nights, "
@@ -116,8 +123,7 @@ def enforce_budget(
 
 # Level 2 (if you finish early): a nudge instead of a rule.
 #
-# enforce_budget removes the hotels the traveller can't afford, so the model
-# never sees them. What if you only labelled them, and let the model decide?
+# enforce_budget filters over-cap hotels from current tool responses. What if you only labelled them, and let the model decide?
 #
 # Write a new callback, flag_budget(tool, args, tool_context, tool_response),
 # that keeps every hotel but adds flags to each hotel:
