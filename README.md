@@ -1,5 +1,5 @@
 # Build a Multi-Agent Travel Assistant with Google ADK
-### Presentation: [workshop slides](workshop/build-multi-agent-travel-assistant-googleadk-nov2026.pptx)
+### Presentation: [workshop slides (PDF)](workshop/build-multi-agent-travel-assistant-googleadk-nov2026.pdf) · [PowerPoint](workshop/build-multi-agent-travel-assistant-googleadk-nov2026.pptx)
 
 ## Workshop description
 In this hands-on workshop, participants will use Google ADK to build a travel assistant powered by multiple agents. We’ll explore how agents can work together, and how to give LLMs room to be creative while guiding them toward the task and outcomes you have in mind.
