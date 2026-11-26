@@ -30,12 +30,9 @@ def save_trip_details(nights: int, budget_eur: int, tool_context: ToolContext) -
     # Use the keys "nights" and "budget_eur": enforce_budget below reads them by
     # those exact names. After a run, you'll see both in the State tab.
 
-    # Keep this workshop's trip details fixed within one session.
+    # Validate trip details before saving them.
     if nights <= 0 or budget_eur <= 0:
         return {"status": "error", "message": "Budget and nights must be positive."}
-    for key, value in (("nights", nights), ("budget_eur", budget_eur)):
-        if key in tool_context.state and tool_context.state[key] != value:
-            return {"status": "error", "message": "Start a new session to change trip details."}
 
     # START YOUR CODE HERE (TODO 1)
 
